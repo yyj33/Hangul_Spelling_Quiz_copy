@@ -73,7 +73,7 @@
                 <div class="statusBar">
                 </div>
             </div>
-            <table align="center" style="width: 100%">
+            <table malign="center" style="width: 100%">
                 <tr>
                     <td>
                         <div class="qBox my-5 my-5 py-3 mb-2 mx-auto">
@@ -83,6 +83,10 @@
             </table>
 
             <div class="answerBox">
+                <!-- 각 문제에 대한 입력란 -->
+                <div class="answerItem">
+                    <!-- JavaScript로 동적으로 추가 -->
+                </div>
             </div>
         </section>
 
@@ -93,29 +97,15 @@
             <button type="button" class="shareBtn mt-3 py-2 px-3" onclick="js:again()">다시하기</button>
             <br>
 
-            <button id="answer" type="button" class="shareBtn mt-3 py-2 px-3" onclick="js:openCloseToc()">정답 보기</button>
-            <br>
-            <div id="toc-content">
-                1. 계좌번호<br>
-                2. 굳이<br>
-                3. 어이<br>
-                4. 무난하게<br>
-                5. 어떻게<br>
-                6. 며칠<br>
-                7. 수익률<br>
-                8. 바람<br>
-                9. 웬일<br>
-                10. 먹은 지<br>
-                11. 빨간색<br>
-                12. 인마<br>
-                13. 여러 가지<br>
-                14. 해님<br>
-                15. 곰곰이<br>
-                16. 꾸준히<br>
-                17. 뚜렷이<br>
-                18. 말끔히<br>
-                19. 파투<br>
-                20. 박여<br>
+            <button id="answer" type="button" class="shareBtn mt-3 py-2 px-3">정답 보기</button>
+
+
+            <!-- 오답 정보를 보여줄 공간 -->
+            <div id="wrongAnswers" class="mt-3">
+                <h2>오답 정보</h2>
+                <ul id="wrongList">
+                    <!-- 여기에 오답 정보가 동적으로 추가될 예정 -->
+                </ul>
             </div>
 
             <!--sns 공유-->
@@ -132,6 +122,7 @@
                 Icon made by photo3idea_studio from www.flaticon.com<br> <!--남자-->
                 Icon made by Pixel perfect from www.flaticon.com<br><br> <!--여자-->
                 Copyrightⓒ2021 by TEAM Jiphyeonjeon
+            </div>
         </section>
     </div>
     <script src="./js/data.js" charset="UTF-8"></script>

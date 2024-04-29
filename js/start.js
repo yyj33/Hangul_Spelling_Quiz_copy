@@ -67,6 +67,34 @@ function goResult() {
   calResult();
 }
 
+function showSummary() {
+  const summaryDiv = document.getElementById("wrongAnswers");
+  const summaryList = document.getElementById("wrongList");
+  summaryList.innerHTML = ""; // Clear previous summary
+
+  for (let i = 0; i < endPoint; i++) {
+    const correctAnswer = qnaList[i].a.find(a => a.type.includes("true")).answer;
+    const userAnswer = qnaList[i].a[select[i]].answer;
+    const isCorrect = correctAnswer === userAnswer;
+    const listItem = document.createElement("li");
+    
+    // Add class for styling based on correctness
+    if (isCorrect) {
+      listItem.classList.add("correct");
+    } else {
+      listItem.classList.add("incorrect");
+    }
+    
+    // Construct the summary text
+    const summaryText = `${i + 1}. ${qnaList[i].q} - ${isCorrect ? "정답" : "오답"}`;
+    listItem.textContent = summaryText;
+    summaryList.appendChild(listItem);
+  }
+
+  // Show the summary section
+  summaryDiv.style.display = "block";
+}
+
 function addAnswer(answerText, qIdx, idx) {
   var a = document.querySelector(".answerBox");
   var answer = document.createElement('button');
@@ -77,6 +105,9 @@ function addAnswer(answerText, qIdx, idx) {
   answer.classList.add('fadeIn');
   a.appendChild(answer);
   answer.innerHTML = answerText;
+
+  // 정답을 저장
+  const correctAnswer = qnaList[qIdx].a.find(a => a.type.includes("true")).answer;
 
   answer.addEventListener("click", function() {
     var children = document.querySelectorAll(".answerList");
@@ -93,8 +124,24 @@ function addAnswer(answerText, qIdx, idx) {
       }
       goNext(++qIdx);
     }, 450);
+
+    // 사용자가 선택한 답변을 저장
+    const userAnswer = answer.textContent;
+    console.log("사용자의 답변:", userAnswer);
+    
+    // 답변 비교 및 결과 표시
+    if (userAnswer !== correctAnswer) {
+      answer.style.color = "red"; // 오답일 경우 텍스트 색상을 빨간색으로 변경
+      answer.innerHTML += " (오답)";
+    } else {
+      answer.style.color = ""; // 정답인 경우 기본 색상으로 변경
+      answer.innerHTML += " (정답)";
+    }
   }, false);
 }
+
+
+
 
 function goNext(qIdx) {
   if (qIdx === endPoint) {
@@ -158,3 +205,9 @@ function openCloseToc() {
       document.getElementById('toc-content').style.display = 'block';
   }
 }
+
+
+// "정답 보기" 버튼에 이벤트 리스너를 추가하여 요약을 표시합니다.
+document.getElementById("answer").addEventListener("click", function() {
+  showSummary();
+}, false);
