@@ -11,6 +11,7 @@ function speak(text) {
   speechSynthesis.speak(utterance);
 }
 
+
 function calResult() {
   var pointArray = [
     { name: 'true', value: 0, key: 0 },
@@ -126,6 +127,11 @@ function goNext(qIdx) {
     goResult();
     return;
   }
+
+  speak(qnaList[qIdx].q); // 문제 읽기
+  for (let i = 0; i < qnaList[qIdx].a.length; i++) {
+    speak((i + 1) + " 정답으로 " + qnaList[qIdx].a[i].answer + "를 선택하시겠습니까?  "); // 문제의 보기 읽기
+  }
   
   var q = document.querySelector(".qBox");
   var index = document.querySelector(".statusNum");
@@ -139,6 +145,7 @@ function goNext(qIdx) {
 
   var status = document.querySelector('.statusBar');
   status.style.width = (100 / endPoint) * (qIdx + 1) + "%";
+  
 }
 
 function begin() {
