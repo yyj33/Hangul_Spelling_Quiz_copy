@@ -67,34 +67,6 @@ function goResult() {
   calResult();
 }
 
-function showSummary() {
-  const summaryDiv = document.getElementById("wrongAnswers");
-  const summaryList = document.getElementById("wrongList");
-  summaryList.innerHTML = ""; // Clear previous summary
-
-  for (let i = 0; i < endPoint; i++) {
-    const correctAnswer = qnaList[i].a.find(a => a.type.includes("true")).answer;
-    const userAnswer = qnaList[i].a[select[i]].answer;
-    const isCorrect = correctAnswer === userAnswer;
-    const listItem = document.createElement("li");
-    
-    // Add class for styling based on correctness
-    if (isCorrect) {
-      listItem.classList.add("correct");
-    } else {
-      listItem.classList.add("incorrect");
-    }
-    
-    // Construct the summary text
-    const summaryText = `${i + 1}. ${qnaList[i].q} - ${isCorrect ? "정답" : "오답"}`;
-    listItem.textContent = summaryText;
-    summaryList.appendChild(listItem);
-  }
-
-  // Show the summary section
-  summaryDiv.style.display = "block";
-}
-
 function addAnswer(answerText, qIdx, idx) {
   var a = document.querySelector(".answerBox");
   var answer = document.createElement('button');
@@ -106,8 +78,8 @@ function addAnswer(answerText, qIdx, idx) {
   a.appendChild(answer);
   answer.innerHTML = answerText;
 
-  // 정답을 저장
-  const correctAnswer = qnaList[qIdx].a.find(a => a.type.includes("true")).answer;
+    // 정답을 저장
+    const correctAnswer = qnaList[qIdx].a.find(a => a.type.includes("true")).answer;
 
   answer.addEventListener("click", function() {
     var children = document.querySelectorAll(".answerList");
@@ -124,11 +96,10 @@ function addAnswer(answerText, qIdx, idx) {
       }
       goNext(++qIdx);
     }, 450);
-
     // 사용자가 선택한 답변을 저장
     const userAnswer = answer.textContent;
     console.log("사용자의 답변:", userAnswer);
-    
+  
     // 답변 비교 및 결과 표시
     if (userAnswer !== correctAnswer) {
       answer.style.color = "red"; // 오답일 경우 텍스트 색상을 빨간색으로 변경
@@ -138,9 +109,10 @@ function addAnswer(answerText, qIdx, idx) {
       answer.innerHTML += " (정답)";
     }
   }, false);
+
+  return { answerText, correctAnswer };
+  
 }
-
-
 
 
 function goNext(qIdx) {
@@ -196,18 +168,36 @@ function copy() {
   alert('링크가 복사되었습니다!');
 }
 
-function openCloseToc() {
-  if (document.getElementById('toc-content').style.display === 'block') { 
-      document.getElementById('answer').textContent = '정답 보기';
-      document.getElementById('toc-content').style.display = 'none';
-  } else {
-      document.getElementById('answer').textContent = '닫기';
-      document.getElementById('toc-content').style.display = 'block';
+function showUserAnswers() {
+  const tocContent = document.getElementById('toc-content');
+  tocContent.innerHTML = "";
+
+  // 각 질문의 정답을 보여주기 위해 반복문 사용
+  for (let i = 0; i < select.length; i++) {
+    const question = qnaList[i].q; // 질문 내용 가져오기
+    const userSelectedAnswer = qnaList[i].a[select[i]].answer; // 사용자가 선택한 답변 가져오기
+    const correctAnswer = qnaList[i].a.find(a => a.type.includes("true")).answer; // 정답 가져오기
+
+    // 각 질문과 그에 해당하는 사용자의 선택과 정답을 보여주기
+    const questionDiv = document.createElement('div');
+    questionDiv.innerHTML = `<p><strong>${question}</strong></p>`;
+    questionDiv.innerHTML += `<p>선택: ${userSelectedAnswer}</p>`;
+    questionDiv.innerHTML += `<p>정답: ${correctAnswer}</p>`;
+    tocContent.appendChild(questionDiv);
   }
 }
 
+function openCloseToc() {
+  const tocContent = document.getElementById('toc-content');
+  const answerBtn = document.getElementById('answer');
 
-// "정답 보기" 버튼에 이벤트 리스너를 추가하여 요약을 표시합니다.
-document.getElementById("answer").addEventListener("click", function() {
-  showSummary();
-}, false);
+  if (tocContent.style.display === 'block') {
+      tocContent.style.display = 'none';
+      answerBtn.textContent = '정답 보기';
+  } else {
+      tocContent.style.display = 'block';
+      answerBtn.textContent = '닫기';
+      showUserAnswers(); // 사용자가 선택한 답변과 정답을 보여주는 함수 호출
+    }
+}
+
