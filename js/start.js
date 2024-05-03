@@ -172,20 +172,47 @@ function showUserAnswers() {
   const tocContent = document.getElementById('toc-content');
   tocContent.innerHTML = "";
 
+  let correctCount = 0; // 맞춘 정답의 개수를 세기 위한 변수
+
+  // 정답의 개수 출력
+  const correctCountDiv = document.createElement('div');
+  correctCountDiv.innerHTML = `<p><strong>정답 개수:</strong> ${correctCount}</p>`;
+  tocContent.appendChild(correctCountDiv);
+
   // 각 질문의 정답을 보여주기 위해 반복문 사용
   for (let i = 0; i < select.length; i++) {
     const question = qnaList[i].q; // 질문 내용 가져오기
     const userSelectedAnswer = qnaList[i].a[select[i]].answer; // 사용자가 선택한 답변 가져오기
     const correctAnswer = qnaList[i].a.find(a => a.type.includes("true")).answer; // 정답 가져오기
 
+    // 선택과 정답이 동일한지 비교
+    const isCorrect = userSelectedAnswer === correctAnswer;
+
     // 각 질문과 그에 해당하는 사용자의 선택과 정답을 보여주기
     const questionDiv = document.createElement('div');
     questionDiv.innerHTML = `<p><strong>${question}</strong></p>`;
     questionDiv.innerHTML += `<p>선택: ${userSelectedAnswer}</p>`;
     questionDiv.innerHTML += `<p>정답: ${correctAnswer}</p>`;
+    
+    // 선택과 정답이 동일한 경우 💚 출력, 아닌 경우 ❤️ 출력
+    const icon = document.createElement('span');
+    icon.textContent = isCorrect ? '💚' : '❤️';
+    questionDiv.appendChild(icon);
+
     tocContent.appendChild(questionDiv);
+
+    // 정답이 맞은 경우 correctCount 증가
+    if (isCorrect) {
+      correctCount++;
+    }
   }
+
+  // 정답 개수 업데이트
+  correctCountDiv.innerHTML = `<p><strong>정답 개수:</strong> ${correctCount}</p>`;
 }
+
+
+
 
 function openCloseToc() {
   const tocContent = document.getElementById('toc-content');
