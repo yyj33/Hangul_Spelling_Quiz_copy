@@ -5,6 +5,12 @@ const status = document.querySelector("#statusNum");
 const endPoint = 20;
 const select = [];
 
+function speak(text) {
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'ko-KR'; // 한국어로 설정
+  speechSynthesis.speak(utterance);
+}
+
 function calResult() {
   var pointArray = [
     { name: 'true', value: 0, key: 0 },

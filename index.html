@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="./css/qna.css">
     <link rel="stylesheet" href="./css/animation.css">
     <link rel="stylesheet" href="./css/result.css">
+    <link rel="stylesheet" href="./css/speak.css">
     <script src="https://developers.kakao.com/sdk/js/kakao.js">
 
     </script>
@@ -47,6 +48,7 @@
         gtag('config', 'G-7DMXD1KV1W');
     </script>
 
+
 </head>
 
 <body>
@@ -60,7 +62,8 @@
                 맞춤법 테스트로 알아보는 <br>
                 나의 한국어 실력은?
             </p>
-            <button type="button" class="startBtn mx-auto" onclick="js:begin()">시작하기</button>
+            <button type="button" class="startBtn mx-auto" onclick="js:begin()">시작하기</button><br>
+            <button type="button" class="speakBtn mx-auto" onclick="speak('이것은 테스트입니다.')"></button>
             <p id="tagfont">
                 #맞춤법 #20문제 #5단계
             </p>
