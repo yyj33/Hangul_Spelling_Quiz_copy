@@ -57,6 +57,7 @@ function setResult(){
   resultImg.alt = point;
   resultImg.classList.add('img-fluid');
   imgDiv.appendChild(resultImg);
+  
 }
 
 function goResult() {
@@ -127,11 +128,6 @@ function goNext(qIdx) {
     goResult();
     return;
   }
-
-  speak(qnaList[qIdx].q); // 문제 읽기
-  for (let i = 0; i < qnaList[qIdx].a.length; i++) {
-    speak((i + 1) + " 정답으로 " + qnaList[qIdx].a[i].answer + "를 선택하시겠습니까?  "); // 문제의 보기 읽기
-  }
   
   var q = document.querySelector(".qBox");
   var index = document.querySelector(".statusNum");
@@ -160,6 +156,26 @@ function begin() {
     }, 450)
     let qIdx = 0;
     goNext(qIdx);
+
+    const startBtn = document.querySelector('.startBtn');
+
+    startBtn.addEventListener("click", function() {
+      const speakerImg = document.createElement('img');
+      speakerImg.src = 'img/speaker.png'; // 스피커 이미지의 경로
+      speakerImg.alt = 'speaker';
+      speakerImg.classList.add('speakerImg'); // 이미지에 클래스 추가
+
+      // 스피커 이미지를 추가
+      document.body.appendChild(speakerImg);
+
+      // 질문 읽기
+      speak(qnaList[qIdx].q);
+
+      // 선택지 읽어주기
+      for (let i = 0; i < qnaList[qIdx].a.length; i++) {
+        speak((i + 1) + " 정답으로 " + qnaList[qIdx].a[i].answer + "를 선택하시겠습니까?  "); // 선택지 읽기
+      }
+    });
   }, 450);
 }
 
@@ -222,6 +238,7 @@ function showUserAnswers() {
 
   // 정답 개수 업데이트
   correctCountDiv.innerHTML = `<p><strong>정답 개수:</strong> ${correctCount}</p>`;
+//  speak("정답개수"+ correctCount +"개"); // 문제 읽기
 }
 
 
@@ -240,4 +257,24 @@ function openCloseToc() {
       showUserAnswers(); // 사용자가 선택한 답변과 정답을 보여주는 함수 호출
     }
 }
+
+const startBtn = document.querySelector('.startBtn');
+
+startBtn.addEventListener("click", function() {
+  const speakerImg = document.createElement('img');
+  speakerImg.src = 'img/speaker.png'; // speaker 이미지의 경로
+  speakerImg.alt = 'speaker';
+  speakerImg.classList.add('speakerImg'); // 이미지에 클래스 추가
+
+  // speaker 이미지를 추가
+  document.body.appendChild(speakerImg);
+
+  // 문제 읽기
+  speak(qnaList[qIdx].q);
+
+  // 보기 읽어주기
+  for (let i = 0; i < qnaList[qIdx].a.length; i++) {
+    speak((i + 1) + " 정답으로 " + qnaList[qIdx].a[i].answer + "를 선택하시겠습니까?  "); // 보기 읽기
+  }
+});
 
