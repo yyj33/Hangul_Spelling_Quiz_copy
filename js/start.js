@@ -123,12 +123,33 @@ function addAnswer(answerText, qIdx, idx) {
 }
 
 
+function addSpeakerImage(qIdx) {
+  var speakerImg = document.createElement('img');
+  const imgDiv = document.querySelector('#speak');
+  var imgURL = './img/speaker.png'; // 이미지 경로 설정
+  speakerImg.src = imgURL;
+  speakerImg.alt = "speaker";
+  speakerImg.classList.add('speakerImg'); // speak.css 파일에 정의된 클래스명으로 변경
+  imgDiv.appendChild(speakerImg);
+  
+  speakerImg.addEventListener("click", function() {
+    // 해당 문제 읽어주기
+    speak(qnaList[qIdx].q);
+    // 해당 문제의 각 답변 읽어주기
+    for (let i = 0; i < qnaList[qIdx].a.length; i++) {
+      speak((i + 1) + " 정답으로 " + qnaList[qIdx].a[i].answer + "를 선택하시겠습니까?");
+    }
+  });
+}
+
+
+
 function goNext(qIdx) {
   if (qIdx === endPoint) {
     goResult();
     return;
   }
-  
+
   var q = document.querySelector(".qBox");
   var index = document.querySelector(".statusNum");
 
@@ -139,10 +160,12 @@ function goNext(qIdx) {
     addAnswer(qnaList[qIdx].a[i].answer, qIdx, i);
   }
 
+  addSpeakerImage(qIdx); // 스피커 이미지 추가
+  
   var status = document.querySelector('.statusBar');
   status.style.width = (100 / endPoint) * (qIdx + 1) + "%";
-  
 }
+
 
 function begin() {
   main.style.WebkitAnimation = "fadeOut 1s";
@@ -153,31 +176,12 @@ function begin() {
     setTimeout(() => {
       main.style.display = "none";
       qna.style.display = "block";
-    }, 450)
+    }, 450);
     let qIdx = 0;
     goNext(qIdx);
-
-    const startBtn = document.querySelector('.startBtn');
-
-    startBtn.addEventListener("click", function() {
-      const speakerImg = document.createElement('img');
-      speakerImg.src = 'img/speaker.png'; // 스피커 이미지의 경로
-      speakerImg.alt = 'speaker';
-      speakerImg.classList.add('speakerImg'); // 이미지에 클래스 추가
-
-      // 스피커 이미지를 추가
-      document.body.appendChild(speakerImg);
-
-      // 질문 읽기
-      speak(qnaList[qIdx].q);
-
-      // 선택지 읽어주기
-      for (let i = 0; i < qnaList[qIdx].a.length; i++) {
-        speak((i + 1) + " 정답으로 " + qnaList[qIdx].a[i].answer + "를 선택하시겠습니까?  "); // 선택지 읽기
-      }
-    });
   }, 450);
 }
+
 
 function again() {
   location.href = "https://hanguel-spelling-test.github.io/"; 
@@ -238,7 +242,7 @@ function showUserAnswers() {
 
   // 정답 개수 업데이트
   correctCountDiv.innerHTML = `<p><strong>정답 개수:</strong> ${correctCount}</p>`;
-//  speak("정답개수"+ correctCount +"개"); // 문제 읽기
+  speak("정답개수"+ correctCount +"개"); // 문제 읽기
 }
 
 
@@ -257,24 +261,4 @@ function openCloseToc() {
       showUserAnswers(); // 사용자가 선택한 답변과 정답을 보여주는 함수 호출
     }
 }
-
-const startBtn = document.querySelector('.startBtn');
-
-startBtn.addEventListener("click", function() {
-  const speakerImg = document.createElement('img');
-  speakerImg.src = 'img/speaker.png'; // speaker 이미지의 경로
-  speakerImg.alt = 'speaker';
-  speakerImg.classList.add('speakerImg'); // 이미지에 클래스 추가
-
-  // speaker 이미지를 추가
-  document.body.appendChild(speakerImg);
-
-  // 문제 읽기
-  speak(qnaList[qIdx].q);
-
-  // 보기 읽어주기
-  for (let i = 0; i < qnaList[qIdx].a.length; i++) {
-    speak((i + 1) + " 정답으로 " + qnaList[qIdx].a[i].answer + "를 선택하시겠습니까?  "); // 보기 읽기
-  }
-});
 
