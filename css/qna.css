@@ -33,7 +33,7 @@
 }
 
 .answerList:hover, .answerList:focus {
-  background-color: bisque;
+  background-color: #e6a7c1;
   color: whitesmoke;
 } 
 
@@ -48,9 +48,9 @@
   height: 100%;
   border-radius: 25px;
   background: #f6e6b4;
-  background: -moz-linear-gradient(top,  #f6e6b4 0%, #ed9017 100%); 
-  background: -webkit-linear-gradient(top,  #f6e6b4 0%,#ed9017 100%);
-  background: linear-gradient(to bottom,  #f6e6b4 0%,#ed9017 100%);
+  background: -moz-linear-gradient(top,  #ebe0e5 0%, #e48eb2 100%); 
+  background: -webkit-linear-gradient(top,  #ebe0e5 0%,#e48eb2 100%);
+  background: linear-gradient(to bottom,  #ebe0e5 0%,#e48eb2 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6e6b4', endColorstr='#ed9017',GradientType=0 );
 }
 
