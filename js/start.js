@@ -242,7 +242,13 @@ function showUserAnswers() {
 
   // 정답 개수 업데이트
   correctCountDiv.innerHTML = `<p><strong>정답 개수:</strong> ${correctCount}</p>`;
-  speak("정답개수"+ correctCount +"개"); // 문제 읽기
+  //speak("정답개수"+ correctCount +"개"); // 문제 읽기
+  return 
+}
+
+function speakResult(){
+
+
 }
 
 
