@@ -33,4 +33,5 @@
     transform: translateX(-50%); /* 가로 중앙 정렬 */
     width: 50px; /* 원하는 크기로 조정 */
     height: auto; /* 가로세로 비율에 맞게 자동 조정 */
+    cursor: pointer; /* 커서를 포인터로 변경하여 사용자에게 클릭 가능한 요소임을 보여줌 */
   }

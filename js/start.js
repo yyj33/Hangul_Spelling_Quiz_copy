@@ -247,9 +247,33 @@ function showUserAnswers() {
 }
 
 function speakResult(){
+  let correctCount = 0;
+  for (let i = 0; i < select.length; i++) {
+    const userSelectedAnswer = qnaList[i].a[select[i]].answer; // 사용자가 선택한 답변 가져오기
+    const correctAnswer = qnaList[i].a.find(a => a.type.includes("true")).answer; // 정답 가져오기
 
+    // 선택과 정답이 동일한 경우 정답 개수 증가
+    if (userSelectedAnswer === correctAnswer) {
+    correctCount++;
+    }
+  }
 
+  // 정답 개수 읽어주기
+  speak("정답 개수는 " + correctCount + "개입니다.");
+
+  // 사용자의 단계 계산
+  const userLevel = calResult();
+
+  // 사용자의 단계에 따라 텍스트 지정
+  let levelText;
+  if (userLevel >= 1 && userLevel <= 5) {
+    levelText = infoList[userLevel - 1].name; // userLevel 값이 1부터 시작하므로 인덱스에 -1
+  } 
+
+  // 사용자의 단계 읽어주기
+  speak("당신의 한국어 실력은 " + levelText + "입니다.");
 }
+
 
 
 
